@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cil.Verifiable {
+namespace UltimateOrb.Cil.Verifiable {
 
     public static partial class SizeOfModule {
 
@@ -98,7 +98,7 @@ namespace Cil.Verifiable {
     }
 }
 
-namespace Cil.Verifiable {
+namespace UltimateOrb.Cil.Verifiable {
 
     public static partial class SizeOfModule {
 

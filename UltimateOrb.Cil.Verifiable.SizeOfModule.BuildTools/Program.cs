@@ -34,7 +34,7 @@ namespace ThisAssembly {
                     var assembly = AssemblyDefinition.ReadAssembly(fileName_Original, rm);
                     var module = assembly.MainModule;
 
-                    var typeref = module.GetType(@"Cil.Verifiable.SizeOfModule/SizeOf_Typed`1", false);
+                    var typeref = module.GetType(@"UltimateOrb.Cil.Verifiable.SizeOfModule/SizeOf_Typed`1", false);
                     var modified = 0;
                     if (typeref is TypeDefinition type) {
                         var tp = type.GenericParameters?[0];

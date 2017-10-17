@@ -4,7 +4,7 @@
 [assembly: System.Security.SecurityRulesAttribute(System.Security.SecurityRuleSet.Level2)]
 [assembly: System.Security.SecurityTransparentAttribute()]
 
-namespace Cil.Verifiable {
+namespace UltimateOrb.Cil.Verifiable {
 
     /// <summary>
     ///     <para>

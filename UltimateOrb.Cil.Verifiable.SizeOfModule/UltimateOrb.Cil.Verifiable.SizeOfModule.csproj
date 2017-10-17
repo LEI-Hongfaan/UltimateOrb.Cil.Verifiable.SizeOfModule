@@ -5,19 +5,20 @@
     <RootNamespace>UltimateOrb.Cil.Verifiable</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyVersion>1</AssemblyVersion>
     <FileVersion>1</FileVersion>
     <PackageTags>SizeOf CIL IL</PackageTags>
     <Authors>LEI Hongfaan</Authors>
     <Company>LEI Hongfaan</Company>
     <Product>UltimateOrb Libraries</Product>
+    <Title>UltimateOrb.Cil.Verifiable.SizeOfModule - UltimateOrb Libraries</Title>
     <Version>1.0.6500.29120</Version>
     <Copyright>Copyright © 2017 LEI Hongfaan. Distributed under the MIT License.</Copyright>
     <PackageLicenseUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule.git</RepositoryUrl>
-    <Description>Provides static methods for getting the managed size  (the result of the CIL 'sizeof' instruction) of the specified type.
+    <Description>Provides static methods for getting the managed size (the result of the CIL 'sizeof' instruction) of the specified type.
 </Description>
     <AssemblyOriginatorKeyFile>test.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
@@ -32,7 +33,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd /d &quot;$(SolutionDir)\$(ProjectName).BuildTools\BuildTools&quot;&#xD;&#xA;echo Invoking build tools to modify the output assembly...&#xD;&#xA;dotnet &quot;$(TargetName).BuildTools.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;cd /d &quot;$(ProjectDir)&quot;&#xD;&#xA;echo To sign the assembly, use command:&#xD;&#xA;echo     sn -Ra &quot;$(TargetPath)&quot; &quot;$(ProjectDir)test.snk&quot;&#xD;&#xA;echo To verify the assembly, use command:&#xD;&#xA;echo     peverify &quot;$(TargetPath)&quot;" />
+    <Exec Command="cd /d &quot;$(SolutionDir)\$(ProjectName).BuildTools\BuildTools&quot;&#xD;&#xA;echo Invoking build tools to modify the output assembly...&#xD;&#xA;dotnet &quot;$(TargetName).BuildTools.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;cd /d &quot;$(ProjectDir)&quot;&#xD;&#xA;echo To sign the assembly, rebuild with 'Sign the assembly', then use the command:&#xD;&#xA;echo     sn -Ra &quot;$(TargetPath)&quot; &quot;$(ProjectDir)test.snk&quot;&#xD;&#xA;echo To verify the assembly, use the command:&#xD;&#xA;echo     peverify &quot;$(TargetPath)&quot;&#xD;&#xA;echo If PEVerify can not resolve the dependent assemblies ([HRESULT 0x80070002]), edit '*.dll.config' files and copy them to the same directory as the output assembly." />
   </Target>
 
   <ItemGroup>

@@ -13,7 +13,7 @@
     <Company>LEI Hongfaan</Company>
     <Product>UltimateOrb Libraries</Product>
     <Title>UltimateOrb.Cil.Verifiable.SizeOfModule - UltimateOrb Libraries</Title>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Copyright>Copyright © 2017 LEI Hongfaan. Distributed under the MIT License.</Copyright>
     <PackageLicenseUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule</PackageProjectUrl>
@@ -28,11 +28,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <DocumentationFile>bin\Release\netstandard2.0\UltimateOrb.Cil.Verifiable.SizeOfModule.xml</DocumentationFile>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <DocumentationFile>bin\Debug\netstandard2.0\UltimateOrb.Cil.Verifiable.SizeOfModule.xml</DocumentationFile>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

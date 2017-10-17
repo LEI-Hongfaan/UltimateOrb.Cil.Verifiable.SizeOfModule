@@ -30,7 +30,11 @@ namespace UltimateOrb.Cil.Verifiable {
         [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         // [System.Diagnostics.Contracts.PureAttribute()]
         public static uint SizeOf<T>() {
+#if FEATURE_USE_STATIC_FIELD
             return SizeOfModule.SizeOf_Typed<T>.Value;
+#else
+            throw (NotImplementedException)null;
+#endif
         }
 
         /// <summary>
@@ -94,6 +98,7 @@ namespace UltimateOrb.Cil.Verifiable {
     }
 }
 
+#if FEATURE_USE_STATIC_FIELD
 namespace UltimateOrb.Cil.Verifiable {
 
     public static partial class SizeOfModule {
@@ -127,3 +132,4 @@ namespace UltimateOrb.Cil.Verifiable {
         }
     }
 }
+#endif

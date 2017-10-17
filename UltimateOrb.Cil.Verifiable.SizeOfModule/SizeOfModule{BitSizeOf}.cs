@@ -35,7 +35,11 @@ namespace UltimateOrb.Cil.Verifiable {
         [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         // [System.Diagnostics.Contracts.PureAttribute()]
         public static ulong BitSizeOf<T>() {
+#if FEATURE_USE_STATIC_FIELD
             return SizeOfModule.BitSizeOf_Typed<T>.Value;
+#else
+            return unchecked((ulong)SizeOfModule.BitsPerByte * (ulong)SizeOfModule.SizeOf<T>());
+#endif
         }
 
         /// <summary>
@@ -98,6 +102,7 @@ namespace UltimateOrb.Cil.Verifiable {
     }
 }
 
+#if FEATURE_USE_STATIC_FIELD
 namespace UltimateOrb.Cil.Verifiable {
 
     public static partial class SizeOfModule {
@@ -111,8 +116,9 @@ namespace UltimateOrb.Cil.Verifiable {
             [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             [System.Diagnostics.Contracts.PureAttribute()]
             private static ulong get_Value() {
-                return (ulong)SizeOfModule.BitsPerByte * SizeOfModule.SizeOf_Typed<T>.Value;
+                return unchecked((ulong)SizeOfModule.BitsPerByte * (ulong)SizeOfModule.SizeOf_Typed<T>.Value);
             }
         }
     }
 }
+#endif

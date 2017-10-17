@@ -8,6 +8,8 @@ namespace ThisAssembly {
 
     public static class Program {
 
+        public static readonly bool UseStaticField = false;
+
         public enum ExitStatus {
             OK,
             UserCanceled,
@@ -33,40 +35,74 @@ namespace ThisAssembly {
                     rm.InMemory = true;
                     var assembly = AssemblyDefinition.ReadAssembly(fileName_Original, rm);
                     var module = assembly.MainModule;
-
-                    var typeref = module.GetType(@"UltimateOrb.Cil.Verifiable.SizeOfModule/SizeOf_Typed`1", false);
                     var modified = 0;
-                    if (typeref is TypeDefinition type) {
-                        var tp = type.GenericParameters?[0];
-                        if (null != tp) {
+                    {
+                        var typeref = module.GetType(@"UltimateOrb.Cil.Verifiable.SizeOfModule/SizeOf_Typed`1", false);
+                        if (typeref is TypeDefinition type) {
+                            var tp = type.GenericParameters?[0];
+                            if (null != tp) {
+                                var collection = type.Methods;
+                                foreach (var method in collection) {
+                                    if (@"get_Value" != method.Name) {
+                                        continue;
+                                    }
+                                    if (!method.HasBody) {
+                                        continue;
+                                    }
+                                    {
+                                        var bd = method.Body;
+                                        var ins = bd.Instructions;
+                                        if (2 > ins.Count) {
+                                            continue;
+                                        }
+                                        var ilg = (ILProcessor)null;
+                                        var insa = ins.ToArray();
+                                        for (var i = 1; insa.Length > i; ++i) {
+                                            var in1 = insa[i];
+                                            if (OpCodes.Throw != in1.OpCode) {
+                                                continue;
+                                            }
+                                            var in0 = insa[i - 1];
+                                            if (OpCodes.Ldnull != in0.OpCode) {
+                                                continue;
+                                            }
+                                            ilg = bd.GetILProcessor();
+                                            ilg.Replace(in0, ilg.Create(OpCodes.Sizeof, tp));
+                                            ilg.Replace(in1, ilg.Create(OpCodes.Ret));
+                                            ++modified;
+                                        }
+                                        if (null != ilg) {
+                                            var ignored = 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (!UseStaticField) {
+                        var typeref = module.GetType(@"UltimateOrb.Cil.Verifiable.SizeOfModule", false);
+                        if (typeref is TypeDefinition type) {
                             var collection = type.Methods;
                             foreach (var method in collection) {
-                                if (@"get_Value" != method.Name) {
+                                if (@"SizeOf" != method.Name) {
                                     continue;
                                 }
+                                var tp = method.GenericParameters?[0];
                                 if (!method.HasBody) {
                                     continue;
                                 }
                                 {
                                     var bd = method.Body;
                                     var ins = bd.Instructions;
-                                    if (2 > ins.Count) {
-                                        continue;
-                                    }
                                     var ilg = (ILProcessor)null;
+                                    ilg = bd.GetILProcessor();
                                     var insa = ins.ToArray();
-                                    for (var i = 1; insa.Length > i; ++i) {
-                                        var in1 = insa[i];
-                                        if (OpCodes.Throw != in1.OpCode) {
-                                            continue;
-                                        }
-                                        var in0 = insa[i - 1];
-                                        if (OpCodes.Ldnull != in0.OpCode) {
-                                            continue;
-                                        }
-                                        ilg = bd.GetILProcessor();
-                                        ilg.Replace(in0, ilg.Create(OpCodes.Sizeof, tp));
-                                        ilg.Replace(in1, ilg.Create(OpCodes.Ret));
+                                    for (var i = 0; insa.Length > i; ++i) {
+                                        ilg.Remove(insa[i]);
+                                    }
+                                    {
+                                        ilg.Append(ilg.Create(OpCodes.Sizeof, tp));
+                                        ilg.Append(ilg.Create(OpCodes.Ret));
                                         ++modified;
                                     }
                                     if (null != ilg) {

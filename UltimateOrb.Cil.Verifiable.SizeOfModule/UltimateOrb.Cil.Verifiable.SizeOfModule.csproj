@@ -2,6 +2,31 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>UltimateOrb.Cil.Verifiable</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyVersion>1</AssemblyVersion>
+    <FileVersion>1</FileVersion>
+    <PackageTags>SizeOf CIL IL</PackageTags>
+    <Authors>LEI Hongfaan</Authors>
+    <Company>LEI Hongfaan</Company>
+    <Product>UltimateOrb Libraries</Product>
+    <Version>1.0.6500.29120</Version>
+    <Copyright>Copyright © 2017 LEI Hongfaan. Distributed under the MIT License.</Copyright>
+    <PackageLicenseUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule.git</RepositoryUrl>
+    <Description>Provides static methods for getting the managed size  (the result of the CIL 'sizeof' instruction) of the specified type.
+</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
 
 </Project>

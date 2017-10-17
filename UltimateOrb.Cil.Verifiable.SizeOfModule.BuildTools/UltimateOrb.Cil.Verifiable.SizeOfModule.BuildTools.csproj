@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>UltimateOrb.Cil.Verifiable</RootNamespace>
+    <Authors>LEI Hongfaan</Authors>
+    <Company>LEI Hongfaan</Company>
+    <Product>UltimateOrb Libraries</Product>
+    <Description>Build tools</Description>
+    <Copyright>Copyright © 2017 LEI Hongfaan. Distributed under the MIT License.</Copyright>
+    <PackageLicenseUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule.git</RepositoryUrl>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(OutDir)*.*&quot; &quot;$(ProjectDir)\BuildTools&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Mono.Cecil" Version="0.10.0-beta6" />
+  </ItemGroup>
+
+</Project>

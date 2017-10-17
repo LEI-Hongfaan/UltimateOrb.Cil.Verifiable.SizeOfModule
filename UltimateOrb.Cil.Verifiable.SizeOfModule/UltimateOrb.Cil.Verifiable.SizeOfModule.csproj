@@ -5,7 +5,7 @@
     <RootNamespace>UltimateOrb.Cil.Verifiable</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyVersion>1</AssemblyVersion>
     <FileVersion>1</FileVersion>
     <PackageTags>SizeOf CIL IL</PackageTags>
@@ -19,6 +19,8 @@
     <RepositoryUrl>https://github.com/LEI-Hongfaan/UltimateOrb.Cil.Verifiable.SizeOfModule.git</RepositoryUrl>
     <Description>Provides static methods for getting the managed size  (the result of the CIL 'sizeof' instruction) of the specified type.
 </Description>
+    <AssemblyOriginatorKeyFile>test.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -28,5 +30,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd /d &quot;$(SolutionDir)\$(ProjectName).BuildTools\BuildTools&quot;&#xD;&#xA;echo Invoking build tools to modify the output assembly...&#xD;&#xA;dotnet &quot;$(TargetName).BuildTools.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;cd /d &quot;$(ProjectDir)&quot;&#xD;&#xA;echo To sign the assembly, use command:&#xD;&#xA;echo     sn -Ra &quot;$(TargetPath)&quot; &quot;$(ProjectDir)test.snk&quot;&#xD;&#xA;echo To verify the assembly, use command:&#xD;&#xA;echo     peverify &quot;$(TargetPath)&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <None Update="UltimateOrb.Cil.Verifiable.SizeOfModule.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
